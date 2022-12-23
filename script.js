@@ -1,3 +1,4 @@
+
 alert("Bienvenido a la sala de espera de la clínica")
 
 let tiempoDeEspera
@@ -13,6 +14,7 @@ while (1) {
         break
     }
 }
+
 
 //-----------JUEGO PIEDRA PAPEL O TIJERA----------------
 let puntajeUsuario
@@ -53,7 +55,7 @@ while (1) {
         opcion = prompt("¿Desea volver a jugar? (S/N)").toUpperCase()
     }
     if (opcion == "N") {
-        alert("¡Gracias por jugar!")
+        alert("¡Hasta Luego!")
         break
     }
     else if (opcion != "S" && opcion != "N") {
@@ -61,49 +63,25 @@ while (1) {
     }
 }
 
-
-
-
 //Reloj Temporizador
 
 //Clase Contador
 
 class Contador {
-    constructor(cuentaInicial, paso, maximo, minimo) {
+    constructor(cuentaInicial, maximo, minimo) {
         this.cuentaInicial = cuentaInicial
         this.cuentaActual = cuentaInicial
-        this.paso = paso
         this.maximo = maximo
         this.minimo = minimo
     }
 
-    //JavaScript no permite mas de un constructor por clase
-    /* constructor() {
-        this.cuentaInicial = 0
-        this.cuentaActual = 0
-        this.paso = 1
-        this.maximo = 100
-        this.minimo = 0
-    } */
-
-    incrementar() {
-        this.cuentaActual += this.paso
-        if (this.cuentaActual > this.maximo) {
-            this.cuentaActual = this.maximo
-        }
-    }
     incrementar(n) {
         this.cuentaActual += n
         if (this.cuentaActual > this.maximo) {
             this.cuentaActual = this.maximo
         }
     }
-    decrementar() {
-        this.cuentaActual -= this.paso
-        if (this.CuentaActual < this.minimo) {
-            this.CuentaActual = this.minimo
-        }
-    }
+
     decrementar(n) {
         this.cuentaActual -= n
         if (this.CuentaActual < this.minimo) {
@@ -124,10 +102,6 @@ class Contador {
         this.cuentaActual = n
     }
 
-    setPaso = (n) => {
-        this.paso = n
-    }
-
     setMaximo = (n) => {
         this.maximo = n
     }
@@ -144,10 +118,6 @@ class Contador {
         return this.cuentaActual
     }
 
-    getPaso = () => {
-        return this.paso
-    }
-
     getMaximo = () => {
         return this.maximo
     }
@@ -158,14 +128,15 @@ class Contador {
 }
 
 
-/* 
-horas = new Contador(0, 1, 24, 0)
-horas.setCuentaActual(Math.floor(2 / 60))
-minutos = new Contador(0, 1, 60, 0)
-minutos.setCuentaActual(2 % 60)
-segundos = new Contador(0, 1, 60, 0)
-Temporizador()
+//Temporizador
 
+horas = new Contador(0, 1, 24, 0)
+horas.setCuentaActual(Math.floor(tiempoDeEspera / 60))
+minutos = new Contador(0, 1, 60, 0)
+minutos.setCuentaActual(tiempoDeEspera % 60)
+segundos = new Contador(0, 1, 60, 0)
+
+Temporizador()
 
 
 //DESARROLLO DE FUNCIONES
@@ -176,38 +147,27 @@ function Temporizador() {
             clearInterval(intervalo)
             alert("¡El tiempo de espera ha terminado!")
         }
-        else if (segundos.getCuentaActual() == 00) {
-            if (minutos.getCuentaActual() == 00) {
-                horas.decrementar(1)
-                minutos.setCuentaActual(60)
+        else {
+            if (segundos.getCuentaActual() == 00) {
+                if (minutos.getCuentaActual() == 00) {
+                    horas.decrementar(1)
+                    minutos.setCuentaActual(60)
+                }
+                minutos.decrementar(1)
+                segundos.setCuentaActual(60)
             }
-            minutos.decrementar(1)
-            segundos.setCuentaActual(60)
+            segundos.decrementar(1)
         }
-
-        segundos.decrementar(1)
         let tiempo = horas.getCuentaActual() + ":" + minutos.getCuentaActual() + ":" + segundos.getCuentaActual()
+        if (segundos.getCuentaActual() < 10) {
+            tiempo = horas.getCuentaActual() + ":" + minutos.getCuentaActual() + ":0" + segundos.getCuentaActual()
+        }
         console.log(tiempo)
 
     }, 100)
-} */
-
-contador1 = new Contador(9, 1, 10, 0)
-contador1.decrementar()
-cronometro()
-//crear funcion cronometro que incremente hasta 10 cada un segundo
-
-function cronometro() {
-    let intervalo = setInterval(function () {
-        if (contador1.getCuentaActual() == 0) {
-            clearInterval(intervalo)
-        }
-        else {
-            contador1.decrementar()
-            console.log([contador1.getCuentaActual()])
-        }
-    }, 1000)
 }
+
+
 
 
 
